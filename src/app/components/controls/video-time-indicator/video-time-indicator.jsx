@@ -1,5 +1,8 @@
+import React, {Component} from 'react';
+
 export default class VideoTimeIndicator extends React.Component {
-    constructor() {
+    constructor(props) {
+        super(props);
         this.currentTime = this.props.currentTime;
         this.duration = this.props.duration;
     }

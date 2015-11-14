@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
 export default class VideoPlayPauseButton extends Component {
-    constructor() {
+    constructor(props) {
+        super(props);
         this.togglePlayback = this.togglePlayback.bind(this);
         this.state = {
             playing: false

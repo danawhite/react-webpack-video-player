@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 export default class VideoProgressBar extends React.Component {
-    constructor() {
-        this
+    constructor(props) {
+        super(props);
     }
     render() {
         var playedStyle = {width: `${this.props.percentPlayed}%`};

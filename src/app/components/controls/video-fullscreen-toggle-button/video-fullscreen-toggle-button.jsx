@@ -1,5 +1,8 @@
+import React, {Component} from 'react';
+
 export default class VideoFullscreenToggleButton extends React.Component {
-    constructor() {
+    constructor(props) {
+        super(props);
         this.requestFullscreen = this.requestFullscreen.bind(this);
     }
     requestFullscreen() {
