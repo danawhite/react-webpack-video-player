@@ -26,6 +26,7 @@ export default class VideoPlayer extends Component{
         this.videoEnded = this.videoEnded.bind(this);
         this.togglePlayback = this.togglePlayback.bind(this);
         this.updateProgressBar = this.updateProgressBar.bind(this);
+        this.toggleMute = this.toggleMute.bind(this);
 
     }
     componentDidMount() {
@@ -112,16 +113,17 @@ export default class VideoPlayer extends Component{
         this.video.currentTime = seekPos;
     }
     toggleMute(){
+        console.log(this);
         this.setState({
             muted: !this.state.muted
         }, function(){
-            this.video.muted = this.state.muted
+            this.video.muteVolume(this.state.muted)
         });
     }
     handleVolumeChange(value){
-        console.log();
         this.setState({volumeLevel: value / 100}, function(){
             this.video.volume = this.state.volumeLevel;
+            console.log(`${this.state.volumeLevel} , ${this.video.volume}`)
         });
     }
     render() {

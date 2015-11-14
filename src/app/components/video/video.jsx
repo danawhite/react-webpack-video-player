@@ -8,7 +8,8 @@ export default class Video extends Component{
         this.updateDuration = this.updateDuration.bind(this);
         this.updatePlaybackStatus = this.updatePlaybackStatus.bind(this);
         this.updateBuffer = this.updateBuffer.bind(this);
-        this.toggleVideo = this.toggleVideo.bind(this)
+        this.toggleVideo = this.toggleVideo.bind(this);
+        this.muteVolume = this.muteVolume.bind(this);
     }
     toggleVideo(playing){
         if(playing) {
@@ -30,6 +31,9 @@ export default class Video extends Component{
     }
     updateBuffer(buffered) {
         this.props.bufferChanged()
+    }
+    muteVolume(muted) {
+        this.video.muted = muted;
     }
     componentDidMount() {
         console.log('componentDidMount');
