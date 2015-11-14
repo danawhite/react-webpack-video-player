@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import VideoVolumeButton from './components/controls/video-volume-button/video-volume-button;
 import VideoPlayPauseButton from './components/controls/video-play-pause-button/video-play-pause-button';
-import VideoTimeIndicator from './components/video-time-indicator';
+import VideoTimeIndicator from './components/controls/video-time-indicator/video-time-indicator';
 import VideoFullscreenButton from './components/controls/video-fullscreen-button/video-fullscreen-button';
-import VideoVolumeButton from './components/controls/video-volume-button';
+import VideoVolumeButton from './components/controls/video-volume-button/video-volume-button';
 
 export default class Video extends Component{
     constructor() {
