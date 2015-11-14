@@ -23,7 +23,7 @@ export default class Video extends Component{
     componentDidMount() {
         // TODO remove magic strings
         this.video.addEventListener('ended', (e) => {
-            this.playbackChanged(e.target.ended);
+            this.updatePlaybackStatus(e.target.ended);
         });
 
         this.video.addEventListener('durationChange', (e) => {
@@ -39,7 +39,7 @@ export default class Video extends Component{
 
         let bufferCheck = setInterval(() => {
             try{
-                let percent = (video.buffered.end(0) / video.duration * 100);
+                let percent = (this.video.buffered.end(0) / this.video.duration * 100);
                 this.updateBuffer(percent);
                 if(percent == 100) {
                     clearInterval(bufferCheck)
@@ -52,8 +52,7 @@ export default class Video extends Component{
     }
     render() {
         return (
-            <video ref={(ref) => this.video = ref}
-                   src={this.props.url}
+            <video src={this.props.url}
                    poster={this.props.poster}>
             </video>
         )

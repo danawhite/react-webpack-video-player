@@ -22,7 +22,7 @@ var common = {
         new HtmlWebpackPlugin({
             title: 'React Video Player'
         }),
-        new OpenBrowserWebpackPlugin({ url: 'http://localhost:8080'}),
+        //new OpenBrowserWebpackPlugin({ url: 'http://localhost:8080/build'}),
     ],
     module: {
         loaders: [
