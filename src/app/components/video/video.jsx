@@ -1,39 +1,61 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import VideoVolumeButton from '../controls/video-volume-button/video-volume-button.jsx';
-import VideoPlayPauseButton from '../controls/video-play-pause-button';
-import VideoTimeIndicator from '../controls/video-time-indicator';
-import VideoFullscreenButton from '../controls/video-fullscreen-button';
-import VideoVolumeButton from '../controls/video-volume-button';
-
 export default class Video extends Component{
     constructor() {
-        this.playing = false;
-        this.percentPlayed =  0;
-        this.percentBuffered = 0;
-        this.duration =  0,
-        this.currentTime =  0,
-        this.muted = false,
-        this.volumeLevel = 0.5,
-        this.fullScreen = false
-        this.onVolumeChange = this.onVolumeChange.bind(this);
+        this.updateCurrentTime = this.updateCurrentTime.bind(this);
+        this.updateDuration = this.updateDuration.bind(this);
+        this.updatePlaybackStatus = this.updatePlaybackStatus.bind(this);
+        this.updateBuffer = this.updateBuffer.bind(this);
+    }
+    updateCurrentTime(){
+        this.props.currentTimeChanged()
+    }
+    updateDuration() {
+        this.props.durationChanged();
+    }
+    updatePlaybackStatus() {
+        this.props.playbackChanged();
+    }
+    updateBuffer() {
+        this.props.bufferChanged()
+    }
+    componentDidMount() {
+        // TODO remove magic strings
+        this.video.addEventListener('ended', (e) => {
+            this.playbackChanged(e.target.ended);
+        });
+
+        this.video.addEventListener('durationChange', (e) => {
+            this.updateDuration(e.target.duration);
+        });
+
+        this.video.addEventListener('timeUpdate', (e) => {
+            this.updateCurrentTime({
+                currentTime: e.target.currentTime,
+                duration: e.target.duration
+            })
+        });
+
+        let bufferCheck = setInterval(() => {
+            try{
+                let percent = (video.buffered.end(0) / video.duration * 100);
+                this.updateBuffer(percent);
+                if(percent == 100) {
+                    clearInterval(bufferCheck)
+                }
+            }
+            catch(ex){
+                percent = 0;
+            }
+        }, 500);
     }
     render() {
         return (
-            <div className="video-player">
-                <Video/>
-                <div class="video-controls">
-                    <VideoVolumeButton onChange={this.props.onVolumeChange}/>
-                    <VideoPlayPauseButton/>
-                    <VideoFullscreenButton/>
-                    <VideoTimeIndicator/>
-                </div>
-            </div>
+            <video ref={(ref) => this.video = ref}
+                   src={this.props.url}
+                   poster={this.props.poster}>
+            </video>
         )
     }
 }
-
-
-
-
