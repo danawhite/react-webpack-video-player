@@ -8,6 +8,15 @@ export default class Video extends Component{
         this.updateDuration = this.updateDuration.bind(this);
         this.updatePlaybackStatus = this.updatePlaybackStatus.bind(this);
         this.updateBuffer = this.updateBuffer.bind(this);
+        this.toggleVideo = this.toggleVideo.bind(this)
+    }
+    toggleVideo(playing){
+        if(playing) {
+            this.video.play();
+        }
+        else {
+            this.video.pause();
+        }
     }
     updateCurrentTime(time){
         this.props.currentTimeChanged(time)
@@ -55,7 +64,8 @@ export default class Video extends Component{
     }
     render() {
         return (
-            <video src={this.props.url}
+            <video ref={(ref) => this.video = ref}
+                   src={this.props.url}
                    poster={this.props.poster}>
             </video>
         )

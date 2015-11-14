@@ -16,7 +16,7 @@ export default class VideoPlayPauseButton extends Component {
 
         return (
             <button className="video-play-pause-button" onClick={this.togglePlayback}>
-                {icon}
+                {icon} Play
             </button>
         )
     }

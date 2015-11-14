@@ -39,15 +39,13 @@ export default class VideoPlayer extends Component{
         })
     }
     togglePlayback() {
+        console.log(this.video);
         this.setState({
             playing: !this.state.playing
         }, function() {
-            if(this.state.playing) {
-                this.refs.video.getDOMNode().play();
-            } else {
-                this.refs.video.getDOMNode().pause();
-            }
-        });
+            console.log(this.state.playing);
+            this.video.toggleVideo(this.state.playing)
+        })
     }
     toggleFullscreen() {
         this.setState({
@@ -129,7 +127,7 @@ export default class VideoPlayer extends Component{
     render() {
         return (
             <div className="video-player">
-                <Video ref={ (ref) => this.video = ref }
+                <Video ref={(ref) => this.video = ref}
                        url={this.props.options.url}
                        poster={this.props.options.poster}
                        currentTimeChanged={this.updateProgressBar}
@@ -141,7 +139,8 @@ export default class VideoPlayer extends Component{
                                        volumeLevel={this.state.volumeLevel}
                                        toggleVolume={this.toggleMute}
                                        volumeChanged={this.handleVolumeChange}/>
-                    <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}/>
+                    <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
+                                          playing={this.state.playing}/>
                     <VideoFullscreenToggleButton onToggleFullscreen={this.toggleFullscreen}/>
                     <VideoTimeIndicator currentTime={this.state.currentTime}
                                         duration={this.state.duration}/>
