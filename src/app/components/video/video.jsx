@@ -10,6 +10,7 @@ export default class Video extends Component{
         this.updateBuffer = this.updateBuffer.bind(this);
         this.toggleVideo = this.toggleVideo.bind(this);
         this.muteVolume = this.muteVolume.bind(this);
+        this.setVolume = this.setVolume.bind(this);
     }
     toggleVideo(playing){
         if(playing) {
@@ -34,6 +35,9 @@ export default class Video extends Component{
     }
     muteVolume(muted) {
         this.video.muted = muted;
+    }
+    setVolume(volume) {
+        this.video.volume = volume;
     }
     componentDidMount() {
         console.log('componentDidMount');

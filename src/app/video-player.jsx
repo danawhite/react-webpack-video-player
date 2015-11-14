@@ -113,7 +113,7 @@ export default class VideoPlayer extends Component{
         this.video.currentTime = seekPos;
     }
     toggleMute(){
-        console.log(this);
+        console.log(ReactDOM.findDOMNode());
         this.setState({
             muted: !this.state.muted
         }, function(){
@@ -122,7 +122,7 @@ export default class VideoPlayer extends Component{
     }
     handleVolumeChange(value){
         this.setState({volumeLevel: value / 100}, function(){
-            this.video.volume = this.state.volumeLevel;
+            this.video.setVolume(this.state.volumeLevel)
             console.log(`${this.state.volumeLevel} , ${this.video.volume}`)
         });
     }
