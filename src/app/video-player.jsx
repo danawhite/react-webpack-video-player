@@ -27,6 +27,7 @@ export default class VideoPlayer extends Component{
         this.togglePlayback = this.togglePlayback.bind(this);
         this.updateProgressBar = this.updateProgressBar.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
+        this.toggleFullscreen = this.toggleFullscreen.bind(this);
 
     }
     componentDidMount() {
@@ -49,22 +50,24 @@ export default class VideoPlayer extends Component{
         })
     }
     toggleFullscreen() {
+        console.log(this.state);
         this.setState({
-            fullScreen: this.state.fullScreen
+            fullScreen: !this.state.fullScreen
         }, () => {
             if(this.state.fullScreen) {
                 var element = document.documentElement;
+                console.log(element);
                 if(element.requestFullscreen){
-                    this.ReactDOM.findDOMNode().requestFullscreen();
+                    ReactDOM.findDOMNode(this.video).requestFullscreen();
                 }
                 else if(element.msRequestFullscreen){
-                    this.ReactDOM.findDOMNode().msRequestFullscreen();
+                    ReactDOM.findDOMNode(this.video).msRequestFullscreen();
                 }
                 else if(element.mozRequestFullscreen){
-                    this.ReactDOM.findDOMNode().mozRequestFullscreen();
+                    ReactDOM.findDOMNode(this.video).mozRequestFullscreen();
                 }
                 else if(element.webkitRequestFullscreen){
-                    this.ReactDOM.findDOMNode().webkitRequestFullscreen();
+                    ReactDOM.findDOMNode(this.video).webkitRequestFullscreen();
                 }
             }else{
                 if(document.exitFullscreen){
@@ -113,7 +116,7 @@ export default class VideoPlayer extends Component{
         this.video.currentTime = seekPos;
     }
     toggleMute(){
-        console.log(ReactDOM.findDOMNode());
+        console.log(ReactDOM.findDOMNode(this.video));
         this.setState({
             muted: !this.state.muted
         }, function(){
