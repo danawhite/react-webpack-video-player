@@ -3,15 +3,41 @@ import React, {Component} from 'react';
 export default class VideoProgressBar extends React.Component {
     constructor(props) {
         super(props);
+        this.styles = {
+            progress: {
+                backgroundColor: '#ffdd00',
+                height: 20
+            }
+        };
+        this.handleProgressClick = this.handleProgressClick.bind(this);
+    }
+    handleProgressClick(event) {
+        this.props.onProgressClick(event);
     }
     render() {
-        var playedStyle = {width: `${this.props.percentPlayed}%`};
-        var bufferedStyle = {width: `${this.props.percentBuffered}%`};
+        this.styles.played = {
+            width: this.props.percentPlayed + '%',
+            backgroundColor: '#ff0000',
+            position: 'relative',
+            height: 20,
+            top: 0,
+            bottom: 0
+        };
+        this.styles.buffered = {
+            width: this.props.percentBuffered + '%',
+            backgroundColor: 'blue',
+            position: 'relative',
+            height: 20,
+            top: 0,
+            bottom: 0
+        };
 
         return (
-            <div className="progress-bar progres-bar-ref" onClick={this.props.onProgressClick}>
-                <div className="playback-percent" style={playedStyle}><span></span></div>
-                <div className="buffer-percent" style={bufferedStyle}><span></span></div>
+            <div className="progress-bar-ref"
+                 onClick ={this.handleProgressClick}
+                 style={this.styles.progress}>
+                <div className="playback-percent" style={this.styles.played}><span></span></div>
+                <div className="buffer-percent" style={this.styles.buffered}><span></span></div>
             </div>
         )
     }

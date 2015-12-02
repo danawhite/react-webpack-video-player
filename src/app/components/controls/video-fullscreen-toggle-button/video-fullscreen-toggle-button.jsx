@@ -11,7 +11,7 @@ export default class VideoFullscreenToggleButton extends React.Component {
     render() {
         return (
             <button className="video-fullscreen-toggle-button" onClick={this.requestFullscreen}>
-                <i className="icon-fullscreen"></i>
+                <i className="icon-fullscreen"></i>Fullscreen
             </button>
         )
     }

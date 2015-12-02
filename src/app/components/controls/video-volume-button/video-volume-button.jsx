@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 export default class VideoVolumeButton extends Component{
     constructor(props) {
         super(props);
-        console.log(props);
         this.toggleVolume = this.toggleVolume.bind(this);
         this.changeVolume = this.changeVolume.bind(this);
         this.sound_levels = {
@@ -12,17 +11,23 @@ export default class VideoVolumeButton extends Component{
             'low': 'icon-volume-down',
             'medium': 'icon-volume',
             'high': 'icon-volume-up'
+        };
+        this.styles = {
+            button: {
+                backgroundColor: 'red',
+                borderRadius: 10
+            }
         }
     }
     toggleVolume() {
         this.props.toggleVolume(this.props.muted);
     }
     changeVolume(event) {
-        console.log(event.target.value);
         this.props.volumeChanged(event.target.value)
     }
     render() {
-        let volumeLevel = this.props.volumeLevel, level;
+        let volumeLevel = this.props.volumeLevel;
+        let level;
 
         if (volumeLevel <= 0){
             level = 'muted';
@@ -34,11 +39,17 @@ export default class VideoVolumeButton extends Component{
             level = 'high';
         }
         return (
-            <div className="volume">
-                <button onClick={this.toggleVolume}>
+            <div className="video-volume-button">
+                <button onClick={this.toggleVolume} style={this.styles.button}>
                     <i className={this.sound_levels[level]}></i>
+                    Mute/Unmute
                 </button>
-                <input className="volume_slider" type="range" min="0" max="100" onInput={this.changeVolume} />
+                <input ref={(ref) => this.slider = ref}
+                       className="volume_slider"
+                       type="range"
+                       min="0" max="100"
+                       onInput={this.changeVolume}
+                />
             </div>
         );
     }

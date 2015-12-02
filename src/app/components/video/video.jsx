@@ -12,6 +12,9 @@ export default class Video extends Component{
         this.muteVolume = this.muteVolume.bind(this);
         this.setVolume = this.setVolume.bind(this);
     }
+    componentDidMount() {
+        //console.log(this.props);
+    }
     toggleVideo(playing){
         if(playing) {
             this.video.play();
@@ -21,10 +24,11 @@ export default class Video extends Component{
         }
     }
     updateCurrentTime(time){
+        //console.log(time);
         this.props.currentTimeChanged(time)
     }
     updateDuration(duration) {
-        console.log(`duration: ${duration}`);
+        //console.log(`duration: ${duration}`);
         this.props.durationChanged();
     }
     updatePlaybackStatus(status) {
@@ -42,20 +46,30 @@ export default class Video extends Component{
     componentDidMount() {
         console.log('componentDidMount');
         // TODO remove magic strings
-        addEventListener('ended', (e) => {
-            this.updatePlaybackStatus(e.target.ended);
-        }, false);
+        this.video.addEventListener('loadedmetadata', (event) => {
+            console.log(event);
+        } );
 
-        addEventListener('durationChange', (e) => {
-            this.updateDuration(e.target.duration);
-        }, false);
+        this.video.addEventListener('ended', (event) => {
+            console.log('ended');
+            this.updatePlaybackStatus(event.target.ended);
+        });
 
-        addEventListener('timeUpdate', (e) => {
+        this.video.addEventListener('durationchange', (event) => {
+            this.updateDuration(event.target.duration);
+        });
+
+        this.video.addEventListener('timeupdate', (event) => {
+            console.log(event.target.currentTime);
             this.updateCurrentTime({
-                currentTime: e.target.currentTime,
-                duration: e.target.duration
+                currentTime: event.target.currentTime,
+                duration: event.target.duration
             })
-        }, false);
+        });
+
+        this.video.addEventListener('seeked', (event) => {
+            console.log(event);
+        });
 
         let bufferCheck = setInterval(() => {
             try{
@@ -70,11 +84,19 @@ export default class Video extends Component{
             }
         }, 500);
     }
+    componentDidUpdate() {
+        console.log('componentDidUpdate');
+    }
+    handleTimeUpdate() {
+        let video = ReactDOM.findDOMNode(this);
+        console.log(video.currentTime);
+    }
     render() {
         return (
             <video ref={(ref) => this.video = ref}
                    src={this.props.url}
-                   poster={this.props.poster}>
+                   poster={this.props.poster}
+                   >
             </video>
         )
     }
