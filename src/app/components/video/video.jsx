@@ -84,13 +84,6 @@ export default class Video extends Component{
             }
         }, 500);
     }
-    componentDidUpdate() {
-        console.log('componentDidUpdate');
-    }
-    handleTimeUpdate() {
-        let video = ReactDOM.findDOMNode(this);
-        console.log(video.currentTime);
-    }
     render() {
         return (
             <video ref={(ref) => this.video = ref}
