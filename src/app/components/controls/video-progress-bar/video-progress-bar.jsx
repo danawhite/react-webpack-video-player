@@ -5,8 +5,8 @@ export default class VideoProgressBar extends React.Component {
         super(props);
         this.styles = {
             progress: {
-                backgroundColor: '#ffdd00',
-                height: 20
+                backgroundColor: 'gray',
+                height: 5
             }
         };
         this.handleProgressClick = this.handleProgressClick.bind(this);
@@ -19,15 +19,15 @@ export default class VideoProgressBar extends React.Component {
             width: this.props.percentPlayed + '%',
             backgroundColor: '#ff0000',
             position: 'relative',
-            height: 20,
+            height: 5,
             top: 0,
             bottom: 0
         };
         this.styles.buffered = {
             width: this.props.percentBuffered + '%',
-            backgroundColor: 'blue',
+            backgroundColor: 'green',
             position: 'relative',
-            height: 20,
+            height: 5,
             top: 0,
             bottom: 0
         };

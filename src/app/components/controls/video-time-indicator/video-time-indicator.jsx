@@ -18,12 +18,11 @@ Number.prototype.toVideoDuration = () => {
 export default class VideoTimeIndicator extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.currentTime = (this.props.currentTime).toVideoDuration();
         this.duration = this.props.duration.toVideoDuration();
         this.styles = {
             button: {
-                backgroundColor: 'indigo'
+                //backgroundColor: 'indigo'
             }
         }
     }

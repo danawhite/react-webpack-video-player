@@ -13,7 +13,6 @@ export default class Video extends Component{
         this.setVolume = this.setVolume.bind(this);
     }
     componentDidMount() {
-        //console.log(this.props);
     }
     toggleVideo(playing){
         if(playing) {
@@ -24,11 +23,9 @@ export default class Video extends Component{
         }
     }
     updateCurrentTime(time){
-        //console.log(time);
         this.props.currentTimeChanged(time)
     }
     updateDuration(duration) {
-        //console.log(`duration: ${duration}`);
         this.props.durationChanged();
     }
     updatePlaybackStatus(status) {
@@ -44,12 +41,7 @@ export default class Video extends Component{
         this.video.volume = volume;
     }
     componentDidMount() {
-        console.log('componentDidMount');
         // TODO remove magic strings
-        this.video.addEventListener('loadedmetadata', (event) => {
-            console.log(event);
-        } );
-
         this.video.addEventListener('ended', (event) => {
             console.log('ended');
             this.updatePlaybackStatus(event.target.ended);
@@ -60,15 +52,18 @@ export default class Video extends Component{
         });
 
         this.video.addEventListener('timeupdate', (event) => {
-            console.log(event.target.currentTime);
             this.updateCurrentTime({
                 currentTime: event.target.currentTime,
                 duration: event.target.duration
             })
         });
 
+        this.video.addEventListener('seeking', (event) => {
+            console.log('seeking');
+        });
+
         this.video.addEventListener('seeked', (event) => {
-            console.log(event);
+            console.log('seeked');
         });
 
         let bufferCheck = setInterval(() => {

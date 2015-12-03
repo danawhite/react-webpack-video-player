@@ -12,6 +12,7 @@ export default class VideoPlayer extends Component{
     // replaces componentWillMount lifecycle method
     constructor(props) {
         super(props);
+
         this.state = {
             playing: false,
             percentPlayed: 0,
@@ -34,6 +35,7 @@ export default class VideoPlayer extends Component{
         this.updateDuration = this.updateDuration.bind(this);
         this.autoPlay = this.autoPlay.bind(this);
         this.seekVideo = this.seekVideo.bind(this);
+        this.updateBufferBar = this.updateBufferBar.bind(this);
     }
     componentDidMount() {
         if(this.autoPlay()) {
@@ -50,7 +52,6 @@ export default class VideoPlayer extends Component{
         })
     }
     togglePlayback() {
-        console.log(`togglePlayback: ${this.video.currentTime}`);
         this.setState({
             playing: !this.state.playing
         }, function() {
@@ -59,11 +60,9 @@ export default class VideoPlayer extends Component{
         })
     }
     toggleFullscreen() {
-        console.log(this.state);
         this.setState({
             fullScreen: !this.state.fullScreen
         }, () => {
-            console.log(this.state.fullScreen);
             if(this.state.fullScreen) {
                 var element = document.documentElement;
                 if(element.requestFullscreen){
@@ -95,27 +94,25 @@ export default class VideoPlayer extends Component{
         })
     }
     updateBufferBar(buffered){
-        //console.log(`updateBufferBar ${buffered}`)
-        //this.setState({
-        //    percentBuffered: buffered
-        //});
+        if(buffered){
+            console.log(`buffered: ${buffered}`);
+        }
+        this.setState({
+            percentBuffered: buffered
+        });
     }
     updateProgressBar(times){
-        console.log(times);
         let percentPlayed = Math.floor((100 / times.duration) * times.currentTime);
         this.setState({
             currentTime: times.currentTime,
             percentPlayed: percentPlayed,
             duration: times.duration
-        }, () => {
-            //let video = ReactDOM.findDOMNode(this.video);
         });
     }
     updateDuration(duration) {
         this.setState({ duration });
     }
     seekVideo(event){
-        console.log(this.state);
         let progressBarElement = event.target;
         if(progressBarElement.className != 'progress-bar-ref'){
             progressBarElement = event.target.parentElement;
@@ -128,15 +125,9 @@ export default class VideoPlayer extends Component{
             percentPlayed: (Math.floor(seekPos)/this.state.duration) * 100,
             currentTime: seekPos
         }, () => {
-            console.log(this.state.currentTime);
             let video = ReactDOM.findDOMNode(this.video);
-            console.log(seekPos);
             video.currentTime = seekPos;
-            //this.updateProgressBar({currentTime: seekPos});
         });
-        console.log(`seekPos: ${Math.floor(seekPos)}`);
-        //console.log(`currentTime: ${this.state.currentTime}`);
-        //console.log(`video.currentTime: ${this.video.currentTime}`);
     }
     toggleMute(){
         this.setState({
@@ -153,7 +144,6 @@ export default class VideoPlayer extends Component{
         this.setState({volumeLevel: value / 100}, function(){
             this.video.setVolume(this.state.volumeLevel);
         });
-        console.log(this.props);
     }
     render() {
         return (
