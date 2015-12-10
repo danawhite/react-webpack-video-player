@@ -8,7 +8,9 @@ export default class VideoPlayPauseButton extends Component {
             play: {
                 position: 'relative',
                 height: 20,
-                margin: 'auto',
+                alighSelf: 'stretch',
+                right: 250,
+                margin: 'auto'
             }
         }
     }

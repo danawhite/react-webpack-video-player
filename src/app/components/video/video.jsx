@@ -14,8 +14,14 @@ export default class Video extends Component{
         this.toggleVideo = this.toggleVideo.bind(this);
         this.muteVolume = this.muteVolume.bind(this);
         this.setVolume = this.setVolume.bind(this);
-    }
-    componentDidMount() {
+
+        this.styles = {
+            video: {
+                display: 'flex',
+                flex: 1
+
+            }
+        }
     }
     toggleVideo(playing){
         if(playing) {
@@ -82,9 +88,13 @@ export default class Video extends Component{
             }
         }, 500);
     }
+    onVideoClick() {
+        this.props.onVideoClick();
+    }
     render() {
         return (
                 <video ref={(ref) => this.video = ref}
+                       onClick={this.onVideoClick}
                        src={this.props.url}
                        poster={this.props.poster}>
                 </video>

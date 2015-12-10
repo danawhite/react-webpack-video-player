@@ -6,25 +6,40 @@ export default class VideoVolumeButton extends Component{
         super(props);
         this.toggleVolume = this.toggleVolume.bind(this);
         this.changeVolume = this.changeVolume.bind(this);
-        this.sound_levels = {
-            'muted': 'icon-volume-off',
-            'low': 'icon-volume-down',
-            'medium': 'icon-volume',
-            'high': 'icon-volume-up'
-        };
         this.styles = {
             button: {
-                backgroundColor: 'red',
-                borderRadius: 10
+                borderRadius: 7
+            },
+            iconVolumeOff: {
+                backgroundColor: 'red'
+            },
+            iconVolumeDown: {
+                backgroundColor: 'indigo'
+            },
+            iconVolumeDefault: {
+                backgroundColor: 'indianred'
+            },
+            iconVolumeUp: {
+                backgroundColor: 'cornsilk'
             }
-        }
+        };
+        this.sound_levels = {
+            'muted': this.styles.iconVolumeOff,
+            'low': this.styles.iconVolumeDown,
+            'medium': this.styles.iconVolumeDefault,
+            'high': this.styles.iconVolumeUp
+        };
     }
     toggleVolume() {
         this.props.toggleVolume(this.props.muted);
     }
     changeVolume(event) {
+        if(this.props.muted) {
+            this.props.toggleVolume(this.props.muted);
+        }
         this.props.volumeChanged(event.target.value)
     }
+
     render() {
         let volumeLevel = this.props.volumeLevel;
         let level;

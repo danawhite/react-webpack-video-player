@@ -39,6 +39,7 @@ export default class VideoPlayer extends Component{
                 flex: 1,
                 flexDirection: 'column',
                 alignItems: 'stretch',
+                justifyContent: 'flex-end'
             }
         };
 
@@ -62,6 +63,9 @@ export default class VideoPlayer extends Component{
     }
     autoPlay() {
         return ReactDOM.findDOMNode(this.video).autoPlay = true;
+    }
+    onVideoClick() {
+        console.log('click');
     }
     videoEnded() {
         this.setState({
@@ -169,6 +173,7 @@ export default class VideoPlayer extends Component{
                 <Video ref={(ref) => this.video = ref}
                        url={this.props.options.url}
                        poster={this.props.options.poster}
+                       onVideoClick={this.onVideoClick}
                        currentTimeChanged={this.updateProgressBar}
                        bufferChanged={this.updateBufferBar}
                        durationChanged={this.updateDuration}

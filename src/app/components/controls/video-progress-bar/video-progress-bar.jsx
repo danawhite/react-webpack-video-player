@@ -6,9 +6,11 @@ export default class VideoProgressBar extends React.Component {
         this.styles = {
             progress: {
                 backgroundColor: 'gray',
-                height: 5
+                height: 5,
+                //width: 1280
             }
         };
+
         this.handleProgressClick = this.handleProgressClick.bind(this);
     }
     shouldComponentUpdate(nextProps, nextState){
@@ -34,7 +36,6 @@ export default class VideoProgressBar extends React.Component {
             top: 0,
             bottom: 0
         };
-
         return (
             <div className="video-progress-bar"
                  onClick ={this.handleProgressClick}
