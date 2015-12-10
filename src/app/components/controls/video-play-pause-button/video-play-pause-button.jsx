@@ -7,10 +7,12 @@ export default class VideoPlayPauseButton extends Component {
         this.styles = {
             play: {
                 position: 'relative',
-                height: 20,
-                alighSelf: 'stretch',
-                right: 250,
-                margin: 'auto'
+                height: 50,
+                width: 50,
+                right: 100,
+                margin: 'auto',
+                borderRadius: 7,
+                cursor: 'pointer'
             }
         }
     }

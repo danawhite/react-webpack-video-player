@@ -29,6 +29,10 @@ export default class VideoPlayer extends Component{
         };
 
         this.styles = {
+            videoPlayer: {
+                //display: 'flex',
+                //alignItems: 'stretch'
+            },
             controls: {
                 position: 'absolute',
                 display: 'flex',
@@ -169,7 +173,7 @@ export default class VideoPlayer extends Component{
     }
     render() {
         return (
-            <div className="video-player">
+            <div className="video-player" style={this.styles.videoPlayer}>
                 <Video ref={(ref) => this.video = ref}
                        url={this.props.options.url}
                        poster={this.props.options.poster}
@@ -178,7 +182,8 @@ export default class VideoPlayer extends Component{
                        bufferChanged={this.updateBufferBar}
                        durationChanged={this.updateDuration}
                        updatePlaybackStatus={this.videoEnded}/>
-                <div className="video-controls" ref={(ref) => { this.controls = ref }} style={this.styles.controls}>
+                <div className="video-controls" ref={(ref) => { this.controls = ref }}
+                     style={this.styles.controls}>
                     <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
                                           playing={this.state.playing}/>
                     <VideoVolumeButton ref={(ref) => this.muteButton = ref}
