@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
+// input::-webkit-media-controls-play-button {
+//display: none;
+//}
 export default class Video extends Component{
     constructor(props) {
         super(props);
@@ -81,11 +84,14 @@ export default class Video extends Component{
     }
     render() {
         return (
-            <video ref={(ref) => this.video = ref}
-                   src={this.props.url}
-                   poster={this.props.poster}
-                   >
-            </video>
+                <video ref={(ref) => this.video = ref}
+                       src={this.props.url}
+                       poster={this.props.poster}>
+                </video>
         )
     }
 }
+
+Video.propTypes = {poster: React.PropTypes.string};
+// add default image here
+Video.defaultProps = {poster: './src/app/assets/video/SampleVideo_1080x720_50mb.png'};

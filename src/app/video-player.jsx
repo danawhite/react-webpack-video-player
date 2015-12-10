@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 import Video from './components/video/video.jsx';
 import VideoPlayPauseButton from './components/controls/video-play-pause-button/video-play-pause-button';
@@ -26,6 +28,20 @@ export default class VideoPlayer extends Component{
             autoPlay: false
         };
 
+        this.styles = {
+            controls: {
+                position: 'absolute',
+                display: 'flex',
+                top: 0,
+                right: 10,
+                bottom: 10,
+                left: 10,
+                flex: 1,
+                flexDirection: 'column',
+                alignItems: 'stretch',
+            }
+        };
+
         this.handleVolumeChange = this.handleVolumeChange.bind(this);
         this.videoEnded = this.videoEnded.bind(this);
         this.togglePlayback = this.togglePlayback.bind(this);
@@ -41,6 +57,8 @@ export default class VideoPlayer extends Component{
         if(this.autoPlay()) {
 
         }
+        console.log(this);
+
     }
     autoPlay() {
         return ReactDOM.findDOMNode(this.video).autoPlay = true;
@@ -155,20 +173,21 @@ export default class VideoPlayer extends Component{
                        bufferChanged={this.updateBufferBar}
                        durationChanged={this.updateDuration}
                        updatePlaybackStatus={this.videoEnded}/>
-                <div className="video-controls" ref={(ref) => { this.controls = ref }}>
+                <div className="video-controls" ref={(ref) => { this.controls = ref }} style={this.styles.controls}>
+                    <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
+                                          playing={this.state.playing}/>
                     <VideoVolumeButton ref={(ref) => this.muteButton = ref}
                                        muted={this.state.muted}
                                        volumeLevel={this.state.volumeLevel}
                                        toggleVolume={this.toggleMute}
                                        volumeChanged={this.handleVolumeChange}/>
-                    <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
-                                          playing={this.state.playing}/>
+
                     <VideoFullscreenToggleButton onToggleFullscreen={this.toggleFullscreen}/>
                     <VideoTimeIndicator currentTime={this.state.currentTime}
                                         duration={this.state.duration}/>
                     <VideoProgressBar percentPlayed={this.state.percentPlayed}
-                                     percentBuffered={this.state.percentBuffered}
-                                     onProgressClick={this.seekVideo}/>
+                                      percentBuffered={this.state.percentBuffered}
+                                      onProgressClick={this.seekVideo}/>
                 </div>
             </div>
         )

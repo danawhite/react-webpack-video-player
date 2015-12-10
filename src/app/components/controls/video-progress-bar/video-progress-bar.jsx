@@ -11,6 +11,9 @@ export default class VideoProgressBar extends React.Component {
         };
         this.handleProgressClick = this.handleProgressClick.bind(this);
     }
+    shouldComponentUpdate(nextProps, nextState){
+        return this.props.percentPlayed !== nextProps.percentPlayed;
+    }
     handleProgressClick(event) {
         this.props.onProgressClick(event);
     }
@@ -33,7 +36,7 @@ export default class VideoProgressBar extends React.Component {
         };
 
         return (
-            <div className="progress-bar-ref"
+            <div className="video-progress-bar"
                  onClick ={this.handleProgressClick}
                  style={this.styles.progress}>
                 <div className="playback-percent" style={this.styles.played}><span></span></div>
