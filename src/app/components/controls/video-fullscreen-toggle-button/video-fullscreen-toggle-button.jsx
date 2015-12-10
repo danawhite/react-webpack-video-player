@@ -7,7 +7,6 @@ export default class VideoFullscreenToggleButton extends React.Component {
         this.styles = {
             toggleFullscreenButton: {
                 position: 'absolute',
-                //color: '#ffdd00',
                 top: 20,
                 right: 150,
                 fontSize: 12,

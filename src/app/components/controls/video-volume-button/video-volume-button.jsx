@@ -7,8 +7,10 @@ export default class VideoVolumeButton extends Component{
         this.toggleVolume = this.toggleVolume.bind(this);
         this.changeVolume = this.changeVolume.bind(this);
         this.styles = {
-            button: {
-                borderRadius: 7
+            muteButton: {
+                borderRadius: 7,
+                cursor: 'pointer',
+                outline: 'none'
             },
             iconVolumeOff: {
                 backgroundColor: 'red'
@@ -55,7 +57,7 @@ export default class VideoVolumeButton extends Component{
         }
         return (
             <div className="video-volume-button">
-                <button onClick={this.toggleVolume} style={this.styles.button}>
+                <button onClick={this.toggleVolume} style={this.styles.muteButton}>
                     <i className={this.sound_levels[level]}></i>
                     Mute/Unmute
                 </button>

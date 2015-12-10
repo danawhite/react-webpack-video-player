@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
+import Perf from 'react-addons-perf'
 
 import Video from './components/video/video.jsx';
 import VideoPlayPauseButton from './components/controls/video-play-pause-button/video-play-pause-button';
@@ -11,7 +11,6 @@ import VideoVolumeButton from './components/controls/video-volume-button/video-v
 import VideoProgressBar from './components/controls/video-progress-bar/video-progress-bar';
 
 export default class VideoPlayer extends Component{
-    // replaces componentWillMount lifecycle method
     constructor(props) {
         super(props);
 
@@ -81,7 +80,8 @@ export default class VideoPlayer extends Component{
         this.setState({
             playing: !this.state.playing
         }, function() {
-            this.video.toggleVideo(this.state.playing)
+            this.video.toggleVideo(this.state.playing);
+            Perf.start();
             this.updateProgressBar({currentTime: this.video.currentTime, duration: this.state.duration});
         })
     }
@@ -184,7 +184,8 @@ export default class VideoPlayer extends Component{
                        updatePlaybackStatus={this.videoEnded}/>
                 <div className="video-controls" ref={(ref) => { this.controls = ref }}
                      style={this.styles.controls}>
-                    <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
+
+            <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
                                           playing={this.state.playing}/>
                     <VideoVolumeButton ref={(ref) => this.muteButton = ref}
                                        muted={this.state.muted}

@@ -5,19 +5,23 @@ export default class VideoTimeIndicator extends React.Component {
     constructor(props) {
         super(props);
         console.log(props);
-        //this.currentTime = this.props.currentTime;
-        //this.duration = this.props.duration;
         this.styles = {
-            button: {
-                //backgroundColor: 'indigo'
+            button: {},
+            time: {
+                fontSize: 16,
+                position: 'relative',
+                bottom: 60,
+                height: 5,
+                color: 'white',
+                backgroundColor: '#333'
             }
-        }
+        };
     }
     render() {
         return (
             <div className="video-time-indicator-time" style={this.styles.button}>
-                <span className="video-time-indicator-current-time">{toVideoDuration(this.props.currentTime)}</span>/
-                <span className="video-time-indicator-duration">{toVideoDuration(this.props.duration)}</span>
+                <span className="video-time-indicator-current-time" style={this.styles.time}>{toVideoDuration(this.props.currentTime)}/</span>
+                <span className="video-time-indicator-duration" style={this.styles.time}>{toVideoDuration(this.props.duration)}</span>
             </div>
         )
     }

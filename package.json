@@ -9,8 +9,17 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": ["es6", "js", "jsx"],
-    "moduleFileExtensions": ["js", "jsx", "json", "es6"],
+    "testFileExtensions": [
+      "es6",
+      "js",
+      "jsx"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "es6"
+    ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",
@@ -31,7 +40,6 @@
   },
   "homepage": "https://github.com/danawhite/react-webpack-video-player#readme",
   "dependencies": {
-    "font-awesome": "^4.5.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3"
   },
@@ -44,6 +52,8 @@
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "css-loader": "^0.22.0",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "file-loader": "^0.8.5",
     "html-webpack-plugin": "^1.6.2",
     "jest": "^0.1.40",
     "jest-cli": "*",
@@ -54,6 +64,7 @@
     "react-hot-loader": "^1.3.0",
     "react-transform-hmr": "^1.0.1",
     "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.4",
     "webpack-dev-server": "^1.12.1"
   }

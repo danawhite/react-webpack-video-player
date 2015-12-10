@@ -73,6 +73,10 @@ export default class Video extends Component{
 
         this.video.addEventListener('seeked', (event) => {
             console.log('seeked');
+            this.updateCurrentTime({
+                currentTime: event.target.currentTime,
+                duration: event.target.duration
+            })
         });
 
         let bufferCheck = setInterval(() => {

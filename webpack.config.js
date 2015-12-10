@@ -3,6 +3,7 @@ var merge = require('webpack-merge');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserWebpackPlugin = require('open-browser-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, 'src');
 const APP_PATH = path.resolve(ROOT_PATH, 'app');
@@ -36,8 +37,12 @@ var common = {
         loaders: [
             { test: /\.css$/,
                 include: APP_PATH,
-                loader: 'style!css'
+                loader: ExtractTextPlugin.extract('style!css')
             },
+            //{
+            //    test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)$/,
+            //    loader: 'url-loader?limit=8192'
+            //},
             { test: /\.jsx?$/,
                 include: APP_PATH,
                 loader: 'babel'
@@ -52,7 +57,8 @@ if(TARGET === 'start' || !TARGET) {
         devtool: 'eval-source-map',
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
-            new OpenBrowserWebpackPlugin()
+            new OpenBrowserWebpackPlugin(),
+            new ExtractTextPlugin('bundle.css')
         ]
     });
 }
