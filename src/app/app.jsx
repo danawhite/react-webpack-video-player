@@ -16,6 +16,6 @@ function main() {
         //poster: './src/app/assets/video/SampleVideo_1080x720_50mb.png'
     };
 
-    // returns a reference to compoentn's backing instance (in this case <VideoPlayer/>)
+    // returns a reference to component's backing instance (in this case <VideoPlayer/>)
     ReactDOM.render(<VideoPlayer options={videoOptions}/>, videoStage);
 }
