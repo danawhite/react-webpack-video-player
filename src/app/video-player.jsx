@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import Perf from 'react-addons-perf'
+import Perf from 'react-addons-perf';
 
 import Video from './components/video/video.jsx';
 import VideoPlayPauseButton from './components/controls/video-play-pause-button/video-play-pause-button';
@@ -21,7 +21,9 @@ export default class VideoPlayer extends Component{
             duration: 0,
             currentTime: 0,
             muted: false,
-            volumeLevel: 0.5,
+            currentVolumeLevel: 0.5,
+            previousVolume: 0,
+            soundLevel: 'volume-up',
             muteValue: 0,
             fullScreen: false,
             autoPlay: false
@@ -29,20 +31,20 @@ export default class VideoPlayer extends Component{
 
         this.styles = {
             videoPlayer: {
-                //display: 'flex',
-                //alignItems: 'stretch'
+               display: 'flex'
             },
             controls: {
                 position: 'absolute',
                 display: 'flex',
                 top: 0,
-                right: 10,
-                bottom: 10,
-                left: 10,
+                right: 0,
+                bottom: 0,
+                left: 0,
                 flex: 1,
                 flexDirection: 'column',
                 alignItems: 'stretch',
-                justifyContent: 'flex-end'
+                justifyContent: 'flex-end',
+                pointerEvents: 'fill'
             }
         };
 
@@ -58,8 +60,8 @@ export default class VideoPlayer extends Component{
         this.updateBufferBar = this.updateBufferBar.bind(this);
     }
     componentDidMount() {
-        if(this.autoPlay()) {
-
+        if(!this.state.autoPlay) {
+            console.log('autoPlay is not enabled');
         }
         console.log(this);
 
@@ -78,12 +80,24 @@ export default class VideoPlayer extends Component{
     }
     togglePlayback() {
         this.setState({
-            playing: !this.state.playing
-        }, function() {
+            playing: !this.state.playing,
+            //currentTime: this.video.currentTime,
+            //duration: this.video.duration
+        }, () => {
+            this.updateProgressBar({
+                currentTime: this.video.currentTime,
+                duration: this.state.duration
+            });
             this.video.toggleVideo(this.state.playing);
-            Perf.start();
-            this.updateProgressBar({currentTime: this.video.currentTime, duration: this.state.duration});
         })
+    }
+    updateProgressBar(times){
+        let percentPlayed = Math.floor((100 / times.duration) * times.currentTime);
+        this.setState({
+            currentTime: times.currentTime,
+            percentPlayed: percentPlayed,
+            duration: times.duration
+        });
     }
     toggleFullscreen() {
         this.setState({
@@ -127,14 +141,6 @@ export default class VideoPlayer extends Component{
             percentBuffered: buffered
         });
     }
-    updateProgressBar(times){
-        let percentPlayed = Math.floor((100 / times.duration) * times.currentTime);
-        this.setState({
-            currentTime: times.currentTime,
-            percentPlayed: percentPlayed,
-            duration: times.duration
-        });
-    }
     updateDuration(duration) {
         this.setState({ duration });
     }
@@ -158,47 +164,67 @@ export default class VideoPlayer extends Component{
     toggleMute(){
         this.setState({
             muted: !this.state.muted
-        }, function(){
-            this.video.muteVolume(this.state.muted);
-            this.updateSliderPosition();
+        }, () => {
+            console.log(this.state.muted);
+            if(this.state.muted) {
+                this.setState({
+                    previousVolumeLevel: this.state.currentVolumeLevel,
+                    currentVolumeLevel: 0
+                }, () => {
+                    this.handleVolumeChange(this.state.currentVolumeLevel);
+                    this.updateSliderPosition(this.state.muted);
+                    console.log(this.state);
+                });
+            } else {
+                this.handleVolumeChange(this.state.currentVolumeLevel);
+                this.setState({
+                    currentVolumeLevel: this.state.previousVolumeLevel,
+                    previousVolumeLevel: 0
+                }, () => {
+                    this.handleVolumeChange(this.state.currentVolumeLevel * 100);
+                    this.updateSliderPosition(this.state.muted);
+                    console.log(this.state);
+                    })
+            }
         });
     }
-    updateSliderPosition() {
-        this.muteButton.slider.value = (this.state.muted) ? 0 : this.state.volumeLevel * 100;
+    updateSliderPosition(muted) {
+        console.log(this.state);
+        console.log(muted);
+        this.muteButton.slider.value = (muted) ? 0 : this.state.currentVolumeLevel * 100;
     }
     handleVolumeChange(value){
-        this.setState({volumeLevel: value / 100}, function(){
-            this.video.setVolume(this.state.volumeLevel);
+        console.log(value);
+        this.setState({currentVolumeLevel: value / 100}, () => {
+            this.video.setVolume(this.state.currentVolumeLevel);
         });
     }
     render() {
         return (
-            <div className="video-player" style={this.styles.videoPlayer}>
+            <div style={this.styles.videoPlayer}>
                 <Video ref={(ref) => this.video = ref}
                        url={this.props.options.url}
                        poster={this.props.options.poster}
-                       onVideoClick={this.onVideoClick}
+                       onVideoClick={this.togglePlayback}
                        currentTimeChanged={this.updateProgressBar}
                        bufferChanged={this.updateBufferBar}
                        durationChanged={this.updateDuration}
                        updatePlaybackStatus={this.videoEnded}/>
-                <div className="video-controls" ref={(ref) => { this.controls = ref }}
+                <div ref={(ref) => { this.controls = ref }}
                      style={this.styles.controls}>
-
-            <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
-                                          playing={this.state.playing}/>
-                    <VideoVolumeButton ref={(ref) => this.muteButton = ref}
-                                       muted={this.state.muted}
-                                       volumeLevel={this.state.volumeLevel}
-                                       toggleVolume={this.toggleMute}
-                                       volumeChanged={this.handleVolumeChange}/>
-
-                    <VideoFullscreenToggleButton onToggleFullscreen={this.toggleFullscreen}/>
-                    <VideoTimeIndicator currentTime={this.state.currentTime}
-                                        duration={this.state.duration}/>
-                    <VideoProgressBar percentPlayed={this.state.percentPlayed}
-                                      percentBuffered={this.state.percentBuffered}
-                                      onProgressClick={this.seekVideo}/>
+                        <VideoFullscreenToggleButton onToggleFullscreen={this.toggleFullscreen}/>
+                        <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
+                                              playing={this.state.playing}/>
+                        <VideoVolumeButton ref={(ref) => this.muteButton = ref}
+                                           muted={this.state.muted}
+                                           currentVolumeLevel={this.state.currentVolumeLevel}
+                                           toggleVolume={this.toggleMute}
+                                           volumeChanged={this.handleVolumeChange}/>
+                        <VideoTimeIndicator currentTime={this.state.currentTime}
+                                            duration={this.state.duration}/>
+                        <VideoProgressBar percentPlayed={this.state.percentPlayed}
+                                          percentBuffered={this.state.percentBuffered}
+                                          onProgressClick={this.seekVideo}/>
                 </div>
             </div>
         )

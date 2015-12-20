@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Icon from '@grove/react-font-awesome';
 
 export default class VideoVolumeButton extends Component{
     constructor(props) {
@@ -10,7 +11,13 @@ export default class VideoVolumeButton extends Component{
             muteButton: {
                 borderRadius: 7,
                 cursor: 'pointer',
-                outline: 'none'
+                outline: 'none',
+                border: 'none',
+                backgroundColor: 'transparent',
+                fontSize: 18
+            },
+            slider: {
+                backgroundColor: 'indigo'
             },
             iconVolumeOff: {
                 backgroundColor: 'red'
@@ -22,14 +29,14 @@ export default class VideoVolumeButton extends Component{
                 backgroundColor: 'indianred'
             },
             iconVolumeUp: {
-                backgroundColor: 'cornsilk'
+                fontSize: 36
             }
         };
-        this.sound_levels = {
-            'muted': this.styles.iconVolumeOff,
-            'low': this.styles.iconVolumeDown,
-            'medium': this.styles.iconVolumeDefault,
-            'high': this.styles.iconVolumeUp
+        this.soundLevels = {
+            'muted': 'volume-off',
+            'low': 'volume-down',
+            'medium': 'volume-down',
+            'high': 'volume-up'
         };
     }
     toggleVolume() {
@@ -43,7 +50,7 @@ export default class VideoVolumeButton extends Component{
     }
 
     render() {
-        let volumeLevel = this.props.volumeLevel;
+        let volumeLevel = this.props.currentVolumeLevel;
         let level;
 
         if (volumeLevel <= 0){
@@ -56,13 +63,15 @@ export default class VideoVolumeButton extends Component{
             level = 'high';
         }
         return (
-            <div className="video-volume-button">
-                <button onClick={this.toggleVolume} style={this.styles.muteButton}>
-                    <i className={this.sound_levels[level]}></i>
-                    Mute/Unmute
+            <div>
+                <button ref={(ref) => this.button = ref}
+                        onClick={this.toggleVolume}
+                        style={this.styles.muteButton}>
+                    <Icon ref={(ref) => this.icon = ref}
+                          name={this.soundLevels[level]}></Icon>
                 </button>
                 <input ref={(ref) => this.slider = ref}
-                       className="volume_slider"
+                       style={this.styles.slider}
                        type="range"
                        min="0" max="100"
                        onInput={this.changeVolume}

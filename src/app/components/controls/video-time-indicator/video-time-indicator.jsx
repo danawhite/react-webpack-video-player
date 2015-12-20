@@ -6,7 +6,6 @@ export default class VideoTimeIndicator extends React.Component {
         super(props);
         console.log(props);
         this.styles = {
-            button: {},
             time: {
                 fontSize: 16,
                 position: 'relative',
@@ -19,9 +18,11 @@ export default class VideoTimeIndicator extends React.Component {
     }
     render() {
         return (
-            <div className="video-time-indicator-time" style={this.styles.button}>
-                <span className="video-time-indicator-current-time" style={this.styles.time}>{toVideoDuration(this.props.currentTime)}/</span>
-                <span className="video-time-indicator-duration" style={this.styles.time}>{toVideoDuration(this.props.duration)}</span>
+            <div className="video-time-indicator-time">
+                <span className="video-time-indicator-current-time"
+                      style={this.styles.time}>{toVideoDuration(this.props.currentTime)}/</span>
+                <span className="video-time-indicator-duration"
+                      style={this.styles.time}>{toVideoDuration(this.props.duration)}</span>
             </div>
         )
     }

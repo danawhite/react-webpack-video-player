@@ -37,13 +37,18 @@ var common = {
         loaders: [
             { test: /\.css$/,
                 include: APP_PATH,
-                loader: ExtractTextPlugin.extract('style!css')
+                loader: 'style!css'
             },
             //{
             //    test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)$/,
             //    loader: 'url-loader?limit=8192'
             //},
-            { test: /\.jsx?$/,
+            { test: /\.jsx$/,
+                include: APP_PATH,
+                loader: 'babel'
+            },
+            {
+                test: /\.js$/,
                 include: APP_PATH,
                 loader: 'babel'
             }
@@ -58,7 +63,7 @@ if(TARGET === 'start' || !TARGET) {
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
             new OpenBrowserWebpackPlugin(),
-            new ExtractTextPlugin('bundle.css')
+            //new ExtractTextPlugin('bundle.css')
         ]
     });
 }

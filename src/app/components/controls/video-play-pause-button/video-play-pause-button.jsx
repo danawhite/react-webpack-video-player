@@ -1,30 +1,18 @@
 import React, {Component} from 'react';
+import Icon from '@grove/react-font-awesome';
+import styles from './video-play-pause-button.styles'
 
 export default class VideoPlayPauseButton extends Component {
     constructor(props) {
         super(props);
         this.togglePlayback = this.togglePlayback.bind(this);
-        this.styles = {
-            playPauseButton: {
-                position: 'relative',
-                height: 50,
-                width: 50,
-                right: 100,
-                margin: 'auto',
-                borderRadius: 7,
-                cursor: 'pointer',
-                outline: 'none'
-            },
-            iconPause: {},
-            iconPlay: {}
-        }
+        this.styles = styles;
     }
     togglePlayback() {
         this.props.onTogglePlayback()
     }
     render() {
-        //var icon = this.props.playing ? (<i style={this.styles.iconPause}></i>) : (<i style={this.styles.iconPlay}></i>);
-        var icon = this.props.playing ? 'Pause' : 'Play';
+        var icon = this.props.playing ? (<Icon name="pause" style={this.styles.iconPause}></Icon>) : (<Icon name="play" style={this.styles.iconPlay}></Icon>);
 
         return (
             <button className="video-play-pause-button"

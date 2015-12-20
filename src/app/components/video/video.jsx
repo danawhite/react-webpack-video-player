@@ -17,9 +17,8 @@ export default class Video extends Component{
 
         this.styles = {
             video: {
-                display: 'flex',
+                objectFit: 'cover',
                 flex: 1
-
             }
         }
     }
@@ -47,6 +46,7 @@ export default class Video extends Component{
         this.video.muted = muted;
     }
     setVolume(volume) {
+        console.log(volume);
         this.video.volume = volume;
     }
     componentDidMount() {
@@ -92,15 +92,14 @@ export default class Video extends Component{
             }
         }, 500);
     }
-    onVideoClick() {
-        this.props.onVideoClick();
-    }
     render() {
         return (
                 <video ref={(ref) => this.video = ref}
-                       onClick={this.onVideoClick}
+                       onClick={this.toggleVideo}
                        src={this.props.url}
-                       poster={this.props.poster}>
+                       poster={this.props.poster}
+                       style={this.styles.video}
+                >
                 </video>
         )
     }

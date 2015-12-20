@@ -8,7 +8,7 @@ export default class VideoProgressBar extends React.Component {
                 position: 'relative',
                 bottom: 50,
                 backgroundColor: 'gray',
-                height: 5,
+                height: 5
             }
         };
 

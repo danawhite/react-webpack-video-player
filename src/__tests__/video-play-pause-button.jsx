@@ -23,7 +23,6 @@ describe('VideoPlayPauseButton', () => {
 
         expect(TestUtils.isCompositeComponent(playPauseButton)).toBeTruthy();
 
-        // expect state to be Playing
         expect(playbackState).toBe('Playing');
     })
 });
