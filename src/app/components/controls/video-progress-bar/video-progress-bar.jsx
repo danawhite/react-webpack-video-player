@@ -5,8 +5,9 @@ export default class VideoProgressBar extends React.Component {
         super(props);
         this.styles = {
             progress: {
-                position: 'relative',
-                bottom: 50,
+                flex: 1,
+                //position: 'relative',
+                //bottom: 50,
                 backgroundColor: 'gray',
                 height: 5
             }

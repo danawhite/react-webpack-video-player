@@ -36,15 +36,33 @@ export default class VideoPlayer extends Component{
             controls: {
                 position: 'absolute',
                 display: 'flex',
+                flexDirection: 'column',
                 top: 0,
                 right: 0,
                 bottom: 0,
                 left: 0,
-                flex: 1,
-                flexDirection: 'column',
                 alignItems: 'stretch',
                 justifyContent: 'flex-end',
                 pointerEvents: 'fill'
+            },
+            upperControls: {
+                height: 200,
+                flex: 1,
+                //backgroundColor: 'red',
+            },
+            middleControls: {
+                display: 'flex',
+                height: 200,
+                //backgroundColor: 'indigo',
+                justifyContent: 'center',
+                alignItems: 'center'
+            },
+            lowerControls:{
+                flex: 1,
+                height: 200,
+                //backgroundColor: 'indianred',
+                alignItems: 'flexEnd',
+                justifyContent: 'center'
             }
         };
 
@@ -212,19 +230,29 @@ export default class VideoPlayer extends Component{
                        updatePlaybackStatus={this.videoEnded}/>
                 <div ref={(ref) => { this.controls = ref }}
                      style={this.styles.controls}>
+                    <div style={this.styles.upperControls}>
                         <VideoFullscreenToggleButton onToggleFullscreen={this.toggleFullscreen}/>
+                    </div>
+                    <div style={this.styles.middleControls}>
                         <VideoPlayPauseButton onTogglePlayback={this.togglePlayback}
-                                              playing={this.state.playing}/>
+                                              playing={this.state.playing}
+                                              duration={this.state.duration}
+                        />
+                    </div>
+                    <div style={this.styles.lowerControls}>
+                        <VideoProgressBar percentPlayed={this.state.percentPlayed}
+                                          percentBuffered={this.state.percentBuffered}
+                                          onProgressClick={this.seekVideo}
+                        />
                         <VideoVolumeButton ref={(ref) => this.muteButton = ref}
                                            muted={this.state.muted}
                                            currentVolumeLevel={this.state.currentVolumeLevel}
                                            toggleVolume={this.toggleMute}
-                                           volumeChanged={this.handleVolumeChange}/>
-                        <VideoTimeIndicator currentTime={this.state.currentTime}
-                                            duration={this.state.duration}/>
-                        <VideoProgressBar percentPlayed={this.state.percentPlayed}
-                                          percentBuffered={this.state.percentBuffered}
-                                          onProgressClick={this.seekVideo}/>
+                                           volumeChanged={this.handleVolumeChange}
+                        />
+                    </div>
+
+                        <VideoTimeIndicator currentTime={this.state.currentTime}/>
                 </div>
             </div>
         )

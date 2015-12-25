@@ -67,8 +67,16 @@ export default class Video extends Component{
             })
         });
 
-        this.video.addEventListener('seeking', (event) => {
+        this.video.addEventListener('seeking', () => {
             console.log('seeking');
+        });
+
+        this.video.addEventListener('pause', () => {
+            console.log('paused');
+        });
+
+        this.video.addEventListener('play', () => {
+            console.log('playing');
         });
 
         this.video.addEventListener('seeked', (event) => {
